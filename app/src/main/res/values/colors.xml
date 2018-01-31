@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#12e3cd</color>
+    <color name="colorPrimaryDark">#12e3cd</color>
+    <color name="colorAccent">#12e3cd</color>
+    <color name="yellow">#ffdf00</color>
+    <color name="itemTextColor">#494949</color>
+    <color name="divisionColor50">#50d2d2d2</color>
+    <color name="gray">#898989</color>
+    <color name="gray50">#50898989</color>
+    <color name="allActivityColor">#f8f8f8</color>
+    <color name="editHintColor">#c6c4c4</color>
+    <color name="warningColor">#fd0001</color>
+    <color name="yellowColor">#ffc001</color>
+
+    <color name="multiple_image_select_primaryDark">#0195FF</color>
+</resources>
