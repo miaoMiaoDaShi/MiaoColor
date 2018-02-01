@@ -48,7 +48,18 @@ dependencies {
 
     // Null Object Presenter for MVP
     api 'com.hannesdorfmann.mosby3:mvp-nullobject-presenter:3.1.0'
-
+    //一个强大RecyclerViewAdapter库
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     api 'com.google.guava:guava:23.6-android'
     api 'com.jakewharton.timber:timber:4.6.0'
+
+    implementation 'com.shuyu:gsyVideoPlayer-java:3.0.0'
+
+//根据你的需求
+    implementation 'com.shuyu:gsyVideoPlayer-armv5:3.0.0'
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:3.0.0'
+    implementation 'com.shuyu:gsyVideoPlayer-arm64:3.0.0'
+    implementation 'com.shuyu:gsyVideoPlayer-x64:3.0.0'
+    implementation 'com.shuyu:gsyVideoPlayer-x86:3.0.0'
+
 }

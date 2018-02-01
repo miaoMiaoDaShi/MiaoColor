@@ -1,4 +1,4 @@
-package com.mcfish.zcodervideo;
+package com.mcfish.code;
 
 /**
  * Author : zhongwenpeng
@@ -12,5 +12,21 @@ public class Constant {
     public static final String AES_IV = "5efd3f6060emaomi";
     public static final String AES_PWD = "625202f9149maomi";
     public static String BACKUP_DOMAIN = "123.huhul1l.com";
+    public static final String URL_SIG_KEY = "maomi_pass_xyz";
+    public enum MemoryUnit {
+        BYTE,
+        KB,
+        MB,
+        GB
+    }
+
+    public enum TimeUnit {
+        MSEC,
+        SEC,
+        MIN,
+        HOUR,
+        DAY
+    }
+
 
 }

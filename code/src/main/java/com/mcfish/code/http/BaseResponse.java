@@ -13,38 +13,29 @@ import android.os.Parcelable;
 
 public class BaseResponse implements Parcelable {
 
-    private int status;
-    private String resmsg;
-    private int totalrow;
+    private int code;
+    private String message;
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public int getTotalrow() {
-        return totalrow;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public void setTotalrow(int totalrow) {
-        this.totalrow = totalrow;
+    public String getMessage() {
+        return message;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setMessage(String message) {
+        this.message = message;
     }
-
-    public String getResmsg() {
-        return resmsg;
-    }
-
-    public void setResmsg(String resmsg) {
-        this.resmsg = resmsg;
-    }
-
 
     public boolean isOk() {
-        return status == 0;
+        return code == 0;
     }
+
 
     @Override
     public int describeContents() {
@@ -53,21 +44,19 @@ public class BaseResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.status);
-        dest.writeString(this.resmsg);
-        dest.writeInt(this.totalrow);
+        dest.writeInt(this.code);
+        dest.writeString(this.message);
     }
 
     public BaseResponse() {
     }
 
     protected BaseResponse(Parcel in) {
-        this.status = in.readInt();
-        this.resmsg = in.readString();
-        this.totalrow = in.readInt();
+        this.code = in.readInt();
+        this.message = in.readString();
     }
 
-    public static final Parcelable.Creator<BaseResponse> CREATOR = new Parcelable.Creator<BaseResponse>() {
+    public static final Creator<BaseResponse> CREATOR = new Creator<BaseResponse>() {
         @Override
         public BaseResponse createFromParcel(Parcel source) {
             return new BaseResponse(source);
@@ -79,3 +68,4 @@ public class BaseResponse implements Parcelable {
         }
     };
 }
+

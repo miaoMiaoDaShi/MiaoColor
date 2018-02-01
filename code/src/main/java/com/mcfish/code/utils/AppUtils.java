@@ -17,13 +17,9 @@ import android.view.WindowManager;
 
 public class AppUtils {
     private static Context mContext;
-    private static Thread mUiThread;
     private static Handler sHandler = new Handler(Looper.getMainLooper());
 
-    public static void init(Context context) {
-        mContext = context;
-        mUiThread = Thread.currentThread();
-    }
+
 
     public static Context getAppContext() {
         return mContext;
@@ -37,9 +33,7 @@ public class AppUtils {
         return mContext.getResources();
     }
 
-    public static boolean isUIThread() {
-        return Thread.currentThread() == mUiThread;
-    }
+
 
     public static void runOnUI(Runnable r) {
         sHandler.post(r);
@@ -65,8 +59,8 @@ public class AppUtils {
         return Build.VERSION.RELEASE;
     }
 
-    public static String getAppVersionName(Context context) {
-        return getAppVersionName(context, context.getPackageName());
+    public static String getAppVersionName() {
+        return getAppVersionName(Utils.getApp(), Utils.getApp().getPackageName());
     }
 
     public static String getAppVersionName(Context context, String packageName) {
@@ -84,8 +78,8 @@ public class AppUtils {
         return str;
     }
 
-    public static int getAppVersionCode(Context context) {
-        return getAppVersionCode(context, context.getPackageName());
+    public static int getAppVersionCode() {
+        return getAppVersionCode(Utils.getApp(), Utils.getApp().getPackageName());
     }
 
     public static int getAppVersionCode(Context context, String packageName) {
@@ -112,13 +106,13 @@ public class AppUtils {
     }
 
     @SuppressLint({"HardwareIds"})
-    public static String getAndroidID(Context context) {
-        @SuppressLint("MissingPermission") String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-        return TextUtils.isEmpty(deviceId) ? Settings.Secure.getString(context.getContentResolver(), "android_id") : deviceId;
+    public static String getAndroidID() {
+        @SuppressLint("MissingPermission") String deviceId = ((TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        return TextUtils.isEmpty(deviceId) ? Settings.Secure.getString(Utils.getApp().getContentResolver(), "android_id") : deviceId;
     }
 
-    public static int[] getScreenDispaly(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    public static int[] getScreenDispaly() {
+        WindowManager windowManager = (WindowManager) Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
         int height = windowManager.getDefaultDisplay().getHeight();
         return new int[]{width, height};

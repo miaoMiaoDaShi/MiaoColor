@@ -1,21 +1,16 @@
 package com.mcfish.code.http;
 
-import android.content.SyncInfo;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.mcfish.code.Configurator;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -36,8 +31,8 @@ public final class RetrofitClient {
     private final static long DEFAULT_TIMEOUT = 30;
     private final static OkHttpClient.Builder HTTP_CLIENT_BUILDER =
             new OkHttpClient.Builder()
-                    .addNetworkInterceptor(
-                            new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                    .addInterceptor(
+                            new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -50,7 +45,7 @@ public final class RetrofitClient {
             new Retrofit.Builder()
                     .client(Configurator.getInstance().getOkHttpClient() != null ? Configurator.getInstance().getOkHttpClient()
                             : HTTP_CLIENT_BUILDER.build())
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(AesGsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(Configurator.getInstance().getApiHost());
 
@@ -141,8 +136,8 @@ public final class RetrofitClient {
             BaseResponse response = (BaseResponse) o;
             if (!response.isOk()) {
                 //如果错误码和错误信息都是null,
-                throw new RuntimeException(TextUtils.isEmpty(response.getStatus() + "" + response.getResmsg())
-                        ? "" : response.getResmsg());
+                throw new RuntimeException(TextUtils.isEmpty(response.getCode() + "" + response.getMessage())
+                        ? "" : response.getMessage());
             }
             return o;
         }

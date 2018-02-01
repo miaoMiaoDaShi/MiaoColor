@@ -37,11 +37,13 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:hint="请输入邮箱"
-                android:inputType="number"
+                android:inputType="textEmailAddress"
                 android:maxEms="11"
+                android:text="1340751953@qq.com"
                 android:maxLines="1"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/editHintColor"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -73,8 +75,10 @@
                 android:hint="请输入密码"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:text="123456"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/editHintColor"
                 android:textSize="14sp"/>
         </LinearLayout>

@@ -1,7 +1,8 @@
-package com.mcfish.zcodervideo.entity;
+package com.mcfish.code.http;
 
 import com.google.gson.annotations.SerializedName;
 import com.mcfish.code.utils.AppUtils;
+import com.mcfish.code.utils.Utils;
 
 /**
  * Author : zhongwenpeng
@@ -26,8 +27,8 @@ public class BaseRequest {
     private String data;
 
     public BaseRequest() {
-        deviceId = AppUtils.getAndroidID(AppUtils.getAppContext());
-        appVersion = AppUtils.getAppVersionName(AppUtils.getAppContext());
+        deviceId = AppUtils.getAndroidID();
+        appVersion = AppUtils.getAppVersionName();
         deviceType = AppUtils.getModel();
         sdkVersion = AppUtils.getSDKVersion();
         deviceVersion = AppUtils.getOSVersion();
@@ -89,5 +90,18 @@ public class BaseRequest {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseRequest{" +
+                "appVersion='" + appVersion + '\'' +
+                ", deviceVersion='" + deviceVersion + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", deviceType='" + deviceType + '\'' +
+                ", sdkVersion='" + sdkVersion + '\'' +
+                ", sig='" + sig + '\'' +
+                ", data='" + data + '\'' +
+                '}';
     }
 }

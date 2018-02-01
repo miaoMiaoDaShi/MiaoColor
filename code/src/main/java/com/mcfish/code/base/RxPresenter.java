@@ -1,10 +1,21 @@
 package com.mcfish.code.base;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hannesdorfmann.mosby3.mvp.MvpNullObjectBasePresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+import com.mcfish.code.Constant;
 import com.mcfish.code.http.BaseDisposable;
+import com.mcfish.code.http.BaseRequest;
 import com.mcfish.code.http.BaseResponse;
 import com.mcfish.code.http.RetrofitClient;
+import com.mcfish.code.utils.AesEncryptionUtil;
+import com.mcfish.code.utils.EncodeUtils;
+import com.mcfish.code.utils.EncryptUtils;
+
+import java.lang.reflect.Type;
+import java.util.Map;
+import java.util.TreeMap;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -51,13 +62,41 @@ public class RxPresenter<V extends MvpView> extends MvpNullObjectBasePresenter<V
     }
 
 
-
     private final Disposable addSubscribe(Disposable subscription) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
         mCompositeDisposable.add(subscription);
         return subscription;
+    }
+
+    protected BaseRequest compositeRequest(Object request) {
+        final BaseRequest baseRequest = new BaseRequest();
+        baseRequest.setData(AesEncryptionUtil.encrypt(new Gson().toJson(request), Constant.AES_PWD, Constant.AES_IV));
+        Map<String, String> params = parseData(baseRequest);
+        StringBuilder sb = new StringBuilder("");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            sb.append("&")
+                    .append(entry.getKey())
+                    .append("=")
+                    .append(EncodeUtils.urlEncode(entry.getValue(), "UTF-8"));
+        }
+        baseRequest.setSig(EncryptUtils.encryptMD5ToString(sb.toString().substring(1) + Constant.URL_SIG_KEY));
+        return baseRequest;
+    }
+
+    /**
+     * 对象转化为map
+     *
+     * @param data
+     * @return
+     */
+    public static Map<String, String> parseData(Object data) {
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        Map<String, String> map = gson.fromJson(json, new TypeToken<TreeMap<String, String>>() {
+        }.getType());
+        return map;
     }
 
     @Override

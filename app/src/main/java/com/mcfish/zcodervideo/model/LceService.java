@@ -8,5 +8,5 @@ package com.mcfish.zcodervideo.model;
  */
 
 
-interface LceService {
+public interface LceService {
 }

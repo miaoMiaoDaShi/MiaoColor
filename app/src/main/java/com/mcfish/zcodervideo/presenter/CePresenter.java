@@ -1,6 +1,13 @@
 package com.mcfish.zcodervideo.presenter;
 
+import com.mcfish.code.http.BaseDisposable;
+import com.mcfish.code.http.BaseResponse;
+import com.mcfish.code.http.ExceptionHandle;
 import com.mcfish.zcodervideo.contract.CeContract;
+import com.mcfish.zcodervideo.entity.HomeNavsInfo;
+import com.mcfish.zcodervideo.entity.LoginRequest;
+import com.mcfish.zcodervideo.entity.UserInfo;
+import com.mcfish.zcodervideo.model.CeService;
 
 /**
  * Author : zhongwenpeng
@@ -11,4 +18,48 @@ import com.mcfish.zcodervideo.contract.CeContract;
 
 
 public class CePresenter extends CeContract.Presenter {
+    /**
+     * 登录
+     * @param account
+     * @param pwd
+     */
+    public void login(String account, String pwd) {
+        final LoginRequest request = new LoginRequest();
+        request.setEmail(account);
+        request.setPassword(pwd);
+        enqueue(new BaseDisposable<UserInfo>(getApi(CeService.class)
+                .login(parseData(compositeRequest(request)))) {
+            @Override
+            public void onNext(UserInfo userInfo) {
+                getView().onSuccess(userInfo);
+            }
+
+            @Override
+            public void onError(ExceptionHandle.ResponseThrowable e) {
+                getView().onError(e.message);
+            }
+
+        });
+
+    }
+
+    /**
+     * 获取首页的导航
+     */
+    public void getHomeNavInfo(){
+        enqueue(new BaseDisposable<HomeNavsInfo>(getApi(CeService.class).getHomeNavInfo()) {
+            @Override
+            public void onNext(HomeNavsInfo homeNavsInfo) {
+                getView().onSuccess(homeNavsInfo);
+
+            }
+
+            @Override
+            public void onError(ExceptionHandle.ResponseThrowable e) {
+                getView().onError(e.message);
+            }
+        });
+    }
+
+
 }

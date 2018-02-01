@@ -77,7 +77,7 @@ public class ExceptionHandle {
             return ex;
         } else {
             ex = new ResponseThrowable(e, ERROR_CODE.UNKNOWN);
-            ex.message = "未知错误";
+            ex.message = e.getMessage();
             return ex;
         }
     }

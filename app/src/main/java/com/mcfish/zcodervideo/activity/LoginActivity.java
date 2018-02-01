@@ -2,17 +2,29 @@ package com.mcfish.zcodervideo.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mcfish.code.utils.ToastUtils;
+import com.mcfish.code.Constant;
 import com.mcfish.zcodervideo.R;
-import com.mcfish.zcodervideo.base.BaseCommonActivity;
+import com.mcfish.zcodervideo.base.BaseMvpActivity;
+import com.mcfish.zcodervideo.contract.CeContract;
+import com.mcfish.code.http.BaseRequest;
+import com.mcfish.zcodervideo.entity.UserInfo;
+import com.mcfish.zcodervideo.presenter.CePresenter;
+import com.mcfish.code.utils.EncodeUtils;
+import com.mcfish.code.utils.EncryptUtils;
+import com.mcfish.zcodervideo.utils.ShareManager;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -24,7 +36,8 @@ import butterknife.OnClick;
  */
 
 
-public class LoginActivity extends BaseCommonActivity {
+public class LoginActivity extends BaseMvpActivity<CeContract.View, CePresenter> implements CeContract.View<UserInfo> {
+    private static final String TAG = "LoginActivity";
     @BindView(R.id.txtAccount)
     EditText txtAccount;
     @BindView(R.id.txtPwd)
@@ -40,10 +53,10 @@ public class LoginActivity extends BaseCommonActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public CePresenter createPresenter() {
+        return new CePresenter();
     }
+
 
     @OnClick({R.id.tvForgetPwd, R.id.btnLogin, R.id.btnRegister})
     public void onViewClicked(View view) {
@@ -57,10 +70,57 @@ public class LoginActivity extends BaseCommonActivity {
                     ToastUtils.showLong("任何一项不能为空~");
                     return;
                 }
+                presenter.login(account, pwd);
                 break;
             case R.id.btnRegister:
+
                 break;
             default:
         }
+    }
+
+//    /**
+//     * 对象转化为map
+//     *
+//     * @param data
+//     * @return
+//     */
+//    public static Map<String, String> parseData(Object data) {
+//        Gson gson = new Gson();
+//        String json = gson.toJson(data);
+//        Map<String, String> map = gson.fromJson(json, new TypeToken<Map<String, String>>() {
+//        }.getType());
+//        return map;
+//    }
+//
+//    public void getParams() {
+//        final BaseRequest request = new BaseRequest();
+//        Map<String, String> params = parseData(request);
+//        if (params == null) {
+//            params = new TreeMap();
+//        }
+//        StringBuilder sb = new StringBuilder("");
+//        for (Map.Entry<String, String> entry : params.entrySet()) {
+//            sb.append("&")
+//                    .append(entry.getKey())
+//                    .append("=")
+//                    .append(EncodeUtils.urlEncode(entry.getValue(), "UTF-8"));
+//        }
+//        Log.i(TAG, "getParams: " +sb.toString());
+//        request.setSig(EncryptUtils.encryptMD5ToString(sb.toString().substring(1) + Constant.URL_SIG_KEY));
+//        Log.i(TAG, "getParams: " + request.toString());
+//    }
+
+    @Override
+    public void onSuccess(UserInfo userInfo) {
+        ToastUtils.show("登录成功~");
+        ShareManager.saveUserInfo(userInfo);
+        finish();
+        MainActivity.startAction(this);
+    }
+
+    @Override
+    public void onError(String e) {
+        ToastUtils.show(e);
     }
 }

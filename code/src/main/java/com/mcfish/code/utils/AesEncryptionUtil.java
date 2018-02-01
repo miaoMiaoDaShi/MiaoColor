@@ -1,4 +1,4 @@
-package com.mcfish.zcodervideo.utils;
+package com.mcfish.code.utils;
 
 import java.io.UnsupportedEncodingException;
 
