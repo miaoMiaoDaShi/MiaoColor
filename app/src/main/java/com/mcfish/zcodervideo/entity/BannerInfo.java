@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 
-public class BannerInfo extends BaseResponse {
+public class BannerInfo {
     private List<DataBean> data;
 
     public List<DataBean> getData() {
