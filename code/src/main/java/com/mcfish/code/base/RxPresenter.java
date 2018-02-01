@@ -13,11 +13,9 @@ import com.mcfish.code.utils.AesEncryptionUtil;
 import com.mcfish.code.utils.EncodeUtils;
 import com.mcfish.code.utils.EncryptUtils;
 
-import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.TreeMap;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -73,6 +71,7 @@ public class RxPresenter<V extends MvpView> extends MvpNullObjectBasePresenter<V
     protected BaseRequest compositeRequest(Object request) {
         final BaseRequest baseRequest = new BaseRequest();
         baseRequest.setData(AesEncryptionUtil.encrypt(new Gson().toJson(request), Constant.AES_PWD, Constant.AES_IV));
+
         Map<String, String> params = parseData(baseRequest);
         StringBuilder sb = new StringBuilder("");
         for (Map.Entry<String, String> entry : params.entrySet()) {

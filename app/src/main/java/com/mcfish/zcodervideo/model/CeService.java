@@ -30,5 +30,5 @@ public interface CeService {
 
     @POST("api/Community/index")
     @FormUrlEncoded
-    Observable<HomeNavsInfo> getHomeNavInfo();
+    Observable<HomeNavsInfo> getHomeNavInfo(@FieldMap Map<String, String> request);
 }

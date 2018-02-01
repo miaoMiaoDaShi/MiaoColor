@@ -5,17 +5,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.mcfish.code.utils.ToastUtils;
 import com.mcfish.zcodervideo.R;
-import com.mcfish.zcodervideo.base.BaseCommonFragment;
 import com.mcfish.zcodervideo.base.BaseMvpFragment;
 import com.mcfish.zcodervideo.contract.CeContract;
 import com.mcfish.zcodervideo.entity.BannerInfo;
+import com.mcfish.zcodervideo.entity.HomeImageInfo;
 import com.mcfish.zcodervideo.entity.HomeNavsInfo;
 import com.mcfish.zcodervideo.presenter.CePresenter;
 import com.mcfish.zcodervideo.utils.GlideImageLoader;
@@ -26,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
@@ -40,12 +37,13 @@ import butterknife.Unbinder;
 
 public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> implements CeContract.View {
     @BindView(R.id.rv)
-    RecyclerView rv;
+    RecyclerView rvImages;
     @BindView(R.id.rvNav)
     RecyclerView rvNav;
     @BindView(R.id.search_bar)
     CardView searchBar;
-    private BaseQuickAdapter mAdapter;
+    private BaseQuickAdapter mNavAdapter;
+    private BaseQuickAdapter mImagesAdapter;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -56,25 +54,45 @@ public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> 
         return new CePresenter();
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        initData();
+    }
+
+
+    private void initData() {
+        presenter.getHomeNavInfo();
     }
 
     private void initView() {
         setUpNav();
+        setUpImages();
+    }
+
+    private void setUpImages() {
+        rvImages.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        mImagesAdapter = new BaseQuickAdapter<HomeImageInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
+
+            @Override
+            protected void convert(BaseViewHolder helper, HomeImageInfo.DataBean.ListBean item) {
+
+            }
+        };
+        rvNav.setAdapter(mImagesAdapter);
     }
 
     private void setUpNav() {
         rvNav.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        mAdapter = new BaseQuickAdapter<HomeNavsInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
+        mNavAdapter = new BaseQuickAdapter<HomeNavsInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
             @Override
             protected void convert(BaseViewHolder helper, HomeNavsInfo.DataBean.ListBean item) {
                 helper.setText(R.id.tvTitle, item.getMc_tags());
             }
         };
-        rvNav.setAdapter(mAdapter);
+        rvNav.setAdapter(mNavAdapter);
     }
 
     private void setupBanner(Banner banner) {
@@ -101,12 +119,12 @@ public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> 
     @Override
     public void onSuccess(Object o) {
         if (o instanceof HomeNavsInfo) {
-            mAdapter.replaceData(((HomeNavsInfo) o).getData().getList());
+            mNavAdapter.replaceData(((HomeNavsInfo) o).getData().getList());
         }
     }
 
     @Override
     public void onError(String e) {
-
+        ToastUtils.show(e);
     }
 }

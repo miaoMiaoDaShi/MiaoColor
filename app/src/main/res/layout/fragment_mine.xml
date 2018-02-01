@@ -15,11 +15,10 @@
             android:background="@color/colorPrimary">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_back"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_mine"/>
         </RelativeLayout>
 
 
@@ -28,6 +27,7 @@
             android:layout_height="150dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
+            android:alpha="0.9"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             app:cardCornerRadius="5dp"
