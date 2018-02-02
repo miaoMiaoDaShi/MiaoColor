@@ -4,38 +4,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
-    <android.support.v4.widget.NestedScrollView
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:scrollingCache="true">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/include_banner_view"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvNav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.RecyclerView>
+</android.support.v4.widget.SwipeRefreshLayout>
 
     <include
         layout="@layout/include_card_view_search_bar"/>

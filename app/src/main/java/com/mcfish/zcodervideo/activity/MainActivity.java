@@ -55,6 +55,8 @@ public class MainActivity extends BaseCommonActivity implements BottomNavigation
         transaction.commit();
         mContent = mHomeFragment;
 
+
+
     }
 
     /**

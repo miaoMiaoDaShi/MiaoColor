@@ -2,8 +2,8 @@ package com.mcfish.zcodervideo.utils;
 
 import com.google.gson.Gson;
 import com.mcfish.code.utils.SPUtils;
-import com.mcfish.zcodervideo.entity.BannerInfo;
-import com.mcfish.zcodervideo.entity.UserInfo;
+import com.mcfish.zcodervideo.model.bean.BannerInfo;
+import com.mcfish.zcodervideo.model.bean.UserInfo;
 
 /**
  * Author : zhongwenpeng

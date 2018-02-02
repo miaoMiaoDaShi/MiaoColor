@@ -32,7 +32,12 @@ public abstract class BaseMvpFragment<V extends MvpView, P extends MvpPresenter<
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutId(), container, false);
         unbind = ButterKnife.bind(this, rootView);
+        onCreateView(savedInstanceState);
         return rootView;
+    }
+
+    protected void onCreateView(Bundle savedInstanceState) {
+
     }
 
     protected abstract int getLayoutId();

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.mcfish.zcodervideo.R;
 import com.mcfish.zcodervideo.base.BaseCommonActivity;
+import com.mcfish.zcodervideo.model.bean.UserInfo;
+import com.mcfish.zcodervideo.utils.ShareManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +63,13 @@ public class SplashActivity extends BaseCommonActivity {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        LoginActivity.startAction(SplashActivity.this);
+                        final UserInfo userInfo = ShareManager.getUserInfo();
+                        if (userInfo != null) {
+                            MainActivity.startAction(SplashActivity.this);
+                        } else {
+                            LoginActivity.startAction(SplashActivity.this);
+                        }
+
                         finish();
                     }
 
@@ -79,6 +87,6 @@ public class SplashActivity extends BaseCommonActivity {
 
     @OnClick(R.id.btnSkin)
     public void onViewClicked() {
-
+        mViewPropertyAnimator.cancel();
     }
 }

@@ -1,4 +1,4 @@
-package com.mcfish.zcodervideo.entity;
+package com.mcfish.zcodervideo.model.bean;
 
 import com.mcfish.code.http.BaseResponse;
 

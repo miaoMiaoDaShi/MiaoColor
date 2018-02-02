@@ -1,25 +1,35 @@
 package com.mcfish.zcodervideo.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.mcfish.code.utils.GlideUtils;
 import com.mcfish.code.utils.ToastUtils;
 import com.mcfish.zcodervideo.R;
 import com.mcfish.zcodervideo.base.BaseMvpFragment;
-import com.mcfish.zcodervideo.contract.CeContract;
-import com.mcfish.zcodervideo.entity.BannerInfo;
-import com.mcfish.zcodervideo.entity.HomeImageInfo;
-import com.mcfish.zcodervideo.entity.HomeNavsInfo;
-import com.mcfish.zcodervideo.presenter.CePresenter;
+import com.mcfish.zcodervideo.contract.HomeContract;
+import com.mcfish.zcodervideo.model.bean.BannerInfo;
+import com.mcfish.zcodervideo.model.bean.HomeImageInfo;
+import com.mcfish.zcodervideo.model.bean.HomeNavsInfo;
+import com.mcfish.zcodervideo.presenter.HomePresenter;
 import com.mcfish.zcodervideo.utils.GlideImageLoader;
 import com.mcfish.zcodervideo.utils.ShareManager;
 import com.youth.banner.Banner;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,23 +45,27 @@ import butterknife.BindView;
  */
 
 
-public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> implements CeContract.View {
+public class HomeFragment extends BaseMvpFragment<HomeContract.View, HomeContract.Presenter> implements HomeContract.View, BaseQuickAdapter.RequestLoadMoreListener {
+    private static final String TAG = "HomeFragment";
     @BindView(R.id.rv)
     RecyclerView rvImages;
-    @BindView(R.id.rvNav)
     RecyclerView rvNav;
     @BindView(R.id.search_bar)
     CardView searchBar;
+    @BindView(R.id.swipeRefreshView)
+    SwipeRefreshLayout swipeRefreshView;
     private BaseQuickAdapter mNavAdapter;
     private BaseQuickAdapter mImagesAdapter;
+    private View mHeadView;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
+
     @Override
-    public CePresenter createPresenter() {
-        return new CePresenter();
+    public HomeContract.Presenter createPresenter() {
+        return new HomePresenter();
     }
 
 
@@ -62,34 +76,48 @@ public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> 
         initData();
     }
 
-
     private void initData() {
-        presenter.getHomeNavInfo();
+        presenter.loadHomeData();
     }
 
     private void initView() {
-        setUpNav();
+        setUpHeadView();
         setUpImages();
     }
 
+    private void setUpHeadView() {
+        mHeadView = getLayoutInflater().inflate(R.layout.home_head_view, null);
+        rvNav = mHeadView.findViewById(R.id.rvNav);
+        setUpNav();
+    }
+
     private void setUpImages() {
-        rvImages.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        mImagesAdapter = new BaseQuickAdapter<HomeImageInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
+        // rvImages.setNestedScrollingEnabled(false);
+        rvImages.setLayoutManager(new LinearLayoutManager(getContext()));
+        mImagesAdapter = new BaseQuickAdapter<HomeImageInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_images) {
 
             @Override
             protected void convert(BaseViewHolder helper, HomeImageInfo.DataBean.ListBean item) {
-
+                helper.setText(R.id.tvTitle, item.getMc_title());
+                GlideUtils.load(helper.itemView, item.getMa_images().get(0), (ImageView) helper.getView(R.id.ivImgA));
+                GlideUtils.load(helper.itemView, item.getMa_images().get(1), (ImageView) helper.getView(R.id.ivImgB));
+                GlideUtils.load(helper.itemView, item.getMa_images().get(2), (ImageView) helper.getView(R.id.ivImgC));
             }
         };
-        rvNav.setAdapter(mImagesAdapter);
+        mImagesAdapter.addHeaderView(mHeadView);
+        mImagesAdapter.setEnableLoadMore(true);
+        mImagesAdapter.setOnLoadMoreListener(this, rvImages);
+        rvImages.setAdapter(mImagesAdapter);
     }
 
     private void setUpNav() {
+        //rvNav.setNestedScrollingEnabled(false);
         rvNav.setLayoutManager(new GridLayoutManager(getContext(), 5));
         mNavAdapter = new BaseQuickAdapter<HomeNavsInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
             @Override
             protected void convert(BaseViewHolder helper, HomeNavsInfo.DataBean.ListBean item) {
                 helper.setText(R.id.tvTitle, item.getMc_tags());
+
             }
         };
         rvNav.setAdapter(mNavAdapter);
@@ -116,15 +144,40 @@ public class HomeFragment extends BaseMvpFragment<CeContract.View, CePresenter> 
         return R.layout.fragment_home;
     }
 
+
     @Override
-    public void onSuccess(Object o) {
-        if (o instanceof HomeNavsInfo) {
-            mNavAdapter.replaceData(((HomeNavsInfo) o).getData().getList());
-        }
+    public void showBanner(@NotNull BannerInfo bannerInfo) {
+
     }
 
     @Override
-    public void onError(String e) {
+    public void showNavigation(@NotNull HomeNavsInfo navsInfo) {
+        mNavAdapter.replaceData(navsInfo.getData().getList());
+    }
+
+    @Override
+    public void showImages(@NotNull HomeImageInfo imageInfo) {
+        mImagesAdapter.loadMoreComplete();
+        mImagesAdapter.addData(imageInfo.getData().getList());
+    }
+
+    @Override
+    public void showError(@NotNull String e) {
         ToastUtils.show(e);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        presenter.loadMoreData();
     }
 }

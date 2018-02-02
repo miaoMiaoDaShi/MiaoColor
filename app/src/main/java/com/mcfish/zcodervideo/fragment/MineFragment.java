@@ -2,19 +2,15 @@ package com.mcfish.zcodervideo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mcfish.zcodervideo.R;
 import com.mcfish.zcodervideo.base.BaseCommonFragment;
-import com.mcfish.zcodervideo.entity.UserInfo;
+import com.mcfish.zcodervideo.model.bean.UserInfo;
 import com.mcfish.zcodervideo.utils.ShareManager;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**

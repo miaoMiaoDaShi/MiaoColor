@@ -45,7 +45,8 @@ dependencies {
     api 'me.dm7.barcodescanner:zxing:1.9.8'
     // MVP + ViewState + LCE Views
     api 'com.hannesdorfmann.mosby3:mvp-lce:3.1.0'
-
+//高效的图片加载库
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
     // Null Object Presenter for MVP
     api 'com.hannesdorfmann.mosby3:mvp-nullobject-presenter:3.1.0'
     //一个强大RecyclerViewAdapter库

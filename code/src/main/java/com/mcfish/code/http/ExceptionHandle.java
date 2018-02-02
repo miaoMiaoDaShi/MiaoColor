@@ -44,40 +44,40 @@ public class ExceptionHandle {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ex.message = "网络错误";
+                    ex.errorMessage = "网络错误";
                     break;
             }
             return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
             ex = new ResponseThrowable(resultException, resultException.code);
-            ex.message = resultException.message;
+            ex.errorMessage = resultException.message;
             return ex;
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
             ex = new ResponseThrowable(e, ERROR_CODE.PARSE_ERROR);
-            ex.message = "解析错误";
+            ex.errorMessage = "解析错误";
             return ex;
         } else if (e instanceof ConnectException) {
             ex = new ResponseThrowable(e, ERROR_CODE.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex.errorMessage = "连接失败";
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
             ex = new ResponseThrowable(e, ERROR_CODE.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex.errorMessage = "证书验证失败";
             return ex;
         } else if (e instanceof ConnectTimeoutException) {
             ex = new ResponseThrowable(e, ERROR_CODE.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.errorMessage = "连接超时";
             return ex;
         } else if (e instanceof java.net.SocketTimeoutException) {
             ex = new ResponseThrowable(e, ERROR_CODE.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.errorMessage = "连接超时";
             return ex;
         } else {
             ex = new ResponseThrowable(e, ERROR_CODE.UNKNOWN);
-            ex.message = e.getMessage();
+            ex.errorMessage = e.getMessage();
             return ex;
         }
     }
@@ -118,7 +118,7 @@ public class ExceptionHandle {
 
     public static class ResponseThrowable extends Exception {
         public int code;
-        public String message;
+        public String errorMessage;
 
         public ResponseThrowable(Throwable throwable, int code) {
             super(throwable);

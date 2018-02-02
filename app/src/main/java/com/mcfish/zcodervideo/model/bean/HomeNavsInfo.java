@@ -1,4 +1,4 @@
-package com.mcfish.zcodervideo.entity;
+package com.mcfish.zcodervideo.model.bean;
 
 import com.mcfish.code.http.BaseResponse;
 
@@ -58,6 +58,23 @@ public class HomeNavsInfo extends BaseResponse {
         private String videoTips;
         private String vipNotice;
         private List<ListBean> list;
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "ads=" + ads +
+                    ", downHelp='" + downHelp + '\'' +
+                    ", forum_url='" + forum_url + '\'' +
+                    ", help='" + help + '\'' +
+                    ", isSignin=" + isSignin +
+                    ", notice='" + notice + '\'' +
+                    ", videoAds=" + videoAds +
+                    ", videoNotice='" + videoNotice + '\'' +
+                    ", videoTips='" + videoTips + '\'' +
+                    ", vipNotice='" + vipNotice + '\'' +
+                    ", list=" + list +
+                    '}';
+        }
 
         public AdsBean getAds() {
             return ads;
@@ -406,6 +423,24 @@ public class HomeNavsInfo extends BaseResponse {
 
             public void setMc_user_counts(String mc_user_counts) {
                 this.mc_user_counts = mc_user_counts;
+            }
+
+            @Override
+            public String toString() {
+                return "ListBean{" +
+                        "mc_article_counts='" + mc_article_counts + '\'' +
+                        ", mc_created='" + mc_created + '\'' +
+                        ", mc_deleted='" + mc_deleted + '\'' +
+                        ", mc_icon='" + mc_icon + '\'' +
+                        ", mc_id='" + mc_id + '\'' +
+                        ", mc_ishot='" + mc_ishot + '\'' +
+                        ", mc_list_order='" + mc_list_order + '\'' +
+                        ", mc_status='" + mc_status + '\'' +
+                        ", mc_tags='" + mc_tags + '\'' +
+                        ", mc_title='" + mc_title + '\'' +
+                        ", mc_updated='" + mc_updated + '\'' +
+                        ", mc_user_counts='" + mc_user_counts + '\'' +
+                        '}';
             }
         }
     }

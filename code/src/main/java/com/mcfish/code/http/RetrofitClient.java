@@ -86,7 +86,7 @@ public final class RetrofitClient {
      * @return
      * @see BaseDisposable
      */
-    public <E extends BaseDisposable<T>, T extends BaseResponse> E enqueue(BaseDisposable<T> disposable) {
+    public <E extends BaseDisposable<T>, T extends BaseResponse> E subscribe(BaseDisposable<T> disposable) {
 
         COMPOSITE_DISPOSABLE.add(disposable);
         disposable
