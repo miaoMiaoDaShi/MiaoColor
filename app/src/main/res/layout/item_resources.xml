@@ -23,7 +23,8 @@
                 android:id="@+id/ivImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@color/colorPrimary"/>
+                android:src="@color/colorPrimary"
+                android:scaleType="centerCrop"/>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cvLabel"
@@ -32,7 +33,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="-15dp"
                 android:layout_marginLeft="-15dp"
-                app:cardBackgroundColor="@color/yellow"
+                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
                 app:contentPaddingBottom="15dp"
@@ -45,7 +46,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="资源分类"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@android:color/white"
                     android:textSize="15sp"/>
             </android.support.v7.widget.CardView>
         </RelativeLayout>

@@ -53,14 +53,14 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     api 'com.google.guava:guava:23.6-android'
     api 'com.jakewharton.timber:timber:4.6.0'
-
-    implementation 'com.shuyu:gsyVideoPlayer-java:3.0.0'
+    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    api 'com.shuyu:gsyVideoPlayer-java:3.0.0'
 
 //根据你的需求
-    implementation 'com.shuyu:gsyVideoPlayer-armv5:3.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-armv7a:3.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-arm64:3.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-x64:3.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-x86:3.0.0'
+   api 'com.shuyu:gsyVideoPlayer-armv5:3.0.0'
+   api 'com.shuyu:gsyVideoPlayer-armv7a:3.0.0'
+   api 'com.shuyu:gsyVideoPlayer-arm64:3.0.0'
+   api 'com.shuyu:gsyVideoPlayer-x64:3.0.0'
+   api 'com.shuyu:gsyVideoPlayer-x86:3.0.0'
 
 }

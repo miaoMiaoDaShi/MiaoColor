@@ -1,6 +1,7 @@
 package com.mcfish.zcodervideo;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.mcfish.code.Configurator;
 
@@ -13,7 +14,7 @@ import com.mcfish.code.Configurator;
  */
 
 
-public class App extends Application {
+public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

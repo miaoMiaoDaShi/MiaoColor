@@ -27,7 +27,7 @@ import com.mcfish.zcodervideo.utils.ShareManager
  */
 
 fun Fragment.showToast(content: String): Toast {
-    val toast = Toast.makeText(this.activity.applicationContext, content, Toast.LENGTH_SHORT)
+    val toast = Toast.makeText(this.activity!!.applicationContext, content, Toast.LENGTH_SHORT)
     toast.show()
     return toast
 }

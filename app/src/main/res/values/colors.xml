@@ -13,5 +13,11 @@
     <color name="warningColor">#fd0001</color>
     <color name="yellowColor">#ffc001</color>
 
+    <!-- white -->
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
     <color name="multiple_image_select_primaryDark">#0195FF</color>
+    <color name="colorLightBlack">#5000</color>
+    <color name="colorTitleBg">#fff</color>
 </resources>

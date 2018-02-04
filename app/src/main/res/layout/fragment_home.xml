@@ -16,8 +16,6 @@
     </android.support.v7.widget.RecyclerView>
 </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include
-        layout="@layout/include_card_view_search_bar"/>
 
 
 </RelativeLayout>

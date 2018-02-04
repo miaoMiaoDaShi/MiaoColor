@@ -50,8 +50,6 @@ public class HomeFragment extends BaseMvpFragment<HomeContract.View, HomeContrac
     @BindView(R.id.rv)
     RecyclerView rvImages;
     RecyclerView rvNav;
-    @BindView(R.id.search_bar)
-    CardView searchBar;
     @BindView(R.id.swipeRefreshView)
     SwipeRefreshLayout swipeRefreshView;
     private BaseQuickAdapter mNavAdapter;
@@ -98,10 +96,14 @@ public class HomeFragment extends BaseMvpFragment<HomeContract.View, HomeContrac
 
             @Override
             protected void convert(BaseViewHolder helper, HomeImageInfo.DataBean.ListBean item) {
-                helper.setText(R.id.tvTitle, item.getMc_title());
-                GlideUtils.load(helper.itemView, item.getMa_images().get(0), (ImageView) helper.getView(R.id.ivImgA));
-                GlideUtils.load(helper.itemView, item.getMa_images().get(1), (ImageView) helper.getView(R.id.ivImgB));
-                GlideUtils.load(helper.itemView, item.getMa_images().get(2), (ImageView) helper.getView(R.id.ivImgC));
+                try {
+                    helper.setText(R.id.tvTitle, item.getMc_title());
+                    GlideUtils.load(helper.itemView, item.getMa_images().get(0), (ImageView) helper.getView(R.id.ivImgA));
+                    GlideUtils.load(helper.itemView, item.getMa_images().get(1), (ImageView) helper.getView(R.id.ivImgB));
+                    GlideUtils.load(helper.itemView, item.getMa_images().get(2), (ImageView) helper.getView(R.id.ivImgC));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
         mImagesAdapter.addHeaderView(mHeadView);
@@ -112,10 +114,13 @@ public class HomeFragment extends BaseMvpFragment<HomeContract.View, HomeContrac
 
     private void setUpNav() {
         //rvNav.setNestedScrollingEnabled(false);
-        rvNav.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        final int navRes[] = new int[]{R.drawable.ic_home_nav_a, R.drawable.ic_home_nav_b,
+                R.drawable.ic_home_nav_c, R.drawable.ic_home_nav_d, R.drawable.ic_home_nav_e};
+        rvNav.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mNavAdapter = new BaseQuickAdapter<HomeNavsInfo.DataBean.ListBean, BaseViewHolder>(R.layout.item_home_navs) {
             @Override
             protected void convert(BaseViewHolder helper, HomeNavsInfo.DataBean.ListBean item) {
+                GlideUtils.load(helper.itemView, navRes[helper.getLayoutPosition()], (ImageView) helper.getView(R.id.ivImage));
                 helper.setText(R.id.tvTitle, item.getMc_tags());
 
             }

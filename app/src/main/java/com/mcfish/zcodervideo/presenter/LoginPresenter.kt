@@ -28,13 +28,19 @@ class LoginPresenter : LoginContract.Presenter() {
 
             override fun onNext(userInfo: UserInfo) {
                 ShareManager.saveUserInfo(userInfo)
-                view.showLoginSuccess(userInfo)
-                view.dismissLoading()
+                view.apply {
+                    showLoginSuccess(userInfo)
+                    dismissLoading()
+                }
+
             }
 
             override fun onError(e: ExceptionHandle.ResponseThrowable) {
-                view.showError(e.errorMessage)
-                view.dismissLoading()
+                view.apply {
+                    showError(e.errorMessage)
+                    dismissLoading()
+                }
+
             }
         })
     }

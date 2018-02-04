@@ -14,7 +14,7 @@ import com.mcfish.zcodervideo.R;
 import com.mcfish.zcodervideo.base.BaseCommonActivity;
 import com.mcfish.zcodervideo.fragment.HomeFragment;
 import com.mcfish.zcodervideo.fragment.MineFragment;
-import com.mcfish.zcodervideo.fragment.ResourcesFragment;
+import com.mcfish.zcodervideo.fragment.ResFragment;
 
 import butterknife.BindView;
 
@@ -25,7 +25,7 @@ public class MainActivity extends BaseCommonActivity implements BottomNavigation
     private FragmentManager mFragmentManager;
     private Fragment mContent;
     private HomeFragment mHomeFragment;
-    private ResourcesFragment mResourcesFragment;
+    private ResFragment mResourcesFragment;
     private MineFragment mMineFragment;
 
     public static void startAction(Context context) {
@@ -93,7 +93,7 @@ public class MainActivity extends BaseCommonActivity implements BottomNavigation
                 break;
             case R.id.navigationResources:
                 if (mResourcesFragment == null) {
-                    mResourcesFragment = ResourcesFragment.newInstance();
+                    mResourcesFragment = ResFragment.newInstance();
                 }
                 switchContent(mResourcesFragment);
                 break;

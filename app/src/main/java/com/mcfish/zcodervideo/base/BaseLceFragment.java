@@ -35,7 +35,7 @@ public abstract class BaseLceFragment<CV extends View, M, V extends MvpLceView<M
         View rootView = inflater.inflate(getLayoutId(), container, false);
         unbind = ButterKnife.bind(this, rootView);
         onCreateView(savedInstanceState);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
     }
     protected void onCreateView(Bundle savedInstanceState) {
 
